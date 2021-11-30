@@ -1,4 +1,3 @@
-
 let socket = io();
 let r,g,b;
 let paddleL, paddleR, ball, topWall, botWall;
@@ -53,6 +52,14 @@ function draw() {
     //     game();
     // }
     game();
+
+    fill('white');
+    textSize(30);
+    text("Score: " + scoreL, 20, 35);
+    text("Score: " + scoreR, width-150, 35);
+    strokeWeight(10);
+    stroke('white');
+    line(width/2,0, width/2, height);
 }
 
 // function gameIntro() {
