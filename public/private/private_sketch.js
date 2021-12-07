@@ -1,4 +1,4 @@
-let socket = io();
+let socket = io('/private');
 let r, g, b;
 let paddleL, paddleR, ball, topWall, botWall;
 let speed = 10;
@@ -7,10 +7,15 @@ let chatBox = document.querySelector("#chatBoxMessages");
 let msg = document.querySelector("#chatInputMsg");
 let submitBtn = document.querySelector("#submitBtn");
 let start = document.querySelector("#start");
-let newUserName;
+let newUserName, roomName;
 
 //------------------------------------------------------
 // code for sockets
+window.addEventListener('load', ()=> {
+    roomName = window.prompt('Enter the room name');
+    socket.emit('room-name', {room: roomName});
+});
+
 socket.on('connect', () => {
     console.log('connected');
 });
@@ -39,6 +44,10 @@ socket.on('score', (data)=> {
     chatScoreMsg = newUserName + " just scored " + scoreMsg + "!";
     // console.log(newScoreMsg, userName);
     chatBox.innerHTML = chatScoreMsg;
+});
+
+socket.on('joined', (data)=> {
+    chatBox.innerHTML = "Hi " + newUserName + ". Welcome to " + roomName + " room!";
 });
 
 //------------------------------------------------------
